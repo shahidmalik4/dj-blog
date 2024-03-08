@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Home {% endblock title %}
+{% block content %}
+
+    <!-- ======= Blog Grid ======= -->
+    <div id="journal-blog" class="text-left  paddsections">
+
+      <div class="container">
+        <div class="section-title text-center">
+          <h2>Posts</h2>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="journal-block">
+          <div class="row">
+
+            {% for post in posts %}
+              <div class="col-lg-4 col-md-6">
+                <div class="journal-info mb-30">
+
+                  <div class="journal-txt">
+
+                    <h4>
+                      <a href="{% url 'post_detail' post.slug %}">{{post.title}}</a>
+                    </h4>
+                    <small class="text-muted">
+                      By:<a href="{% url 'user_posts' post.author.id %}" class="text-muted">
+                          {{ post.author|title }}
+                        </a>
+                    </small>
+                    <b>|</b>
+                    <small class="text-muted">
+                      {{ post.date_posted | date:"F d, Y" }}
+                    </small>
+                    <b>|</b>
+                    <small class="text-muted">
+                      {{ post.comments.count }} Comments
+                    </small>
+                    <br>
+                    <p class="separator">{{post.body|safe|slice:":250"}}</p>
+
+                  </div>
+
+                </div>
+              </div>
+            {% endfor %}
+
+          </div>
+        </div>
+      </div>
+    </div><!-- End Blog Grid -->
+
+{% endblock content %}

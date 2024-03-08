@@ -1,0 +1,5 @@
+Django==4.2.2
+Pillow==9.5.0
+requests==2.31.0
+django_crispy_forms==2.1
+django-ckeditor==6.7.1

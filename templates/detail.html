@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} {{post.title}} {% endblock title %}
+{% block content %}
+
+    <!-- ======= Blog Single ======= -->
+    <div class="main-content paddsection">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-12 col-md-offset-2">
+            <div class="row">
+              <div class="container-main single-main">
+                <div class="col-md-12">
+                  <div class="block-main mb-30">
+                    <div class="content-main single-post padDiv">
+                      <div class="journal-txt float-end">
+                        <a href="{% url 'update_post' post.slug %}" class="btn btn-outline-primary ml-2">
+                          Update
+                        </a>
+                        <a href="{% url 'delete_post' post.slug %}" class="btn btn-outline-danger">
+                          Delelet
+                        </a>
+                      </div>
+                      <div class="journal-txt">
+                        <h4><a href="">{{post.title}}</a></h4>
+                      </div>
+                      <div class="post-meta">
+                        <ul class="list-unstyled mb-0">
+                          <li>
+                            <small class="text-muted">
+                              By: {{ post.author|title }}
+                            </small>
+                          </li>
+                          <b>|</b>
+                          <li>
+                            <small class="text-muted">
+                              {{ post.date_posted | date:"F d, Y" }}
+                            </small>
+                          </li>
+                          <b>|</b>
+                          <li>
+                            <small class="text-muted">
+                              {{ post.comments.count }} Comments
+                            </small>
+                          </li>
+                        </ul>
+                      </div>
+                      <p class="mb-30">{{post.body|safe}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="comments text-left padDiv mb-30">
+                    <div class="entry-comments">
+                      <h6 class="mb-30">{{post.comments.count}} comments</h6>
+                      <ul class="entry-comments-list list-unstyled">
+                        {% for comment in comments %}
+                          <li>
+                            <div class="entry-comments-item">
+                              <img src="{% static 'img/avatar.jpg' %}"
+                                class="entry-comments-avatar" alt="">
+                              <div class="entry-comments-body">
+                                <span class="entry-comments-author">{{comment.name}}</span>
+                                <span>
+                                  <a href="">
+                                    {{ comment.created_on | date:"M d, Y" }} at
+                                    {{ comment.created_on | date:"h:i A" }}
+                                  </a>
+                                </span>
+                                <p class="mb-10">{{ comment.body }}</p>
+                              </div>
+                            </div>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <br>
+                <h3>Add Comment</h3>
+                <form method="post">
+                  {% csrf_token %}
+                  {{ comment_form.as_p }}
+                  <input type="submit" value="Submit" class="btn btn-outline-success">
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Blog Single -->
+
+{% endblock content %}
